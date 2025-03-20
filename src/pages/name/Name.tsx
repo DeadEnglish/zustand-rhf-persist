@@ -1,10 +1,10 @@
 import { Box, NumberInput, Text, TextInput } from "@mrshmllw/smores-react";
-import { ContinueButtons } from "../../components/ContinueButtons";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { StepOne, stepOneValidation } from "../../store/validation";
 import { useNavigate, useParams } from "react-router";
 import useQuoteStore from "../../store/quote.store";
+import { FormButtons } from "../../components/FormButtons";
 
 export function Name() {
   const { quoteId } = useParams();
@@ -79,7 +79,7 @@ export function Name() {
             />
           )}
         />
-        <ContinueButtons />
+        <FormButtons />
       </form>
     </Box>
   );

@@ -3,8 +3,8 @@ import { Controller, useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { stepThreeValidaton } from "../../store/validation";
-import { ContinueButtons } from "../../components/ContinueButtons";
 import useQuoteStore from "../../store/quote.store";
+import { FormButtons } from "../../components/FormButtons";
 
 export function FinalSubmit() {
   const { quoteId } = useParams();
@@ -68,7 +68,7 @@ export function FinalSubmit() {
             />
           )}
         />
-        <ContinueButtons />
+        <FormButtons />
       </form>
     </Box>
   );

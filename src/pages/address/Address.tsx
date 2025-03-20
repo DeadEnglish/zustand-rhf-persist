@@ -3,8 +3,8 @@ import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { StepTwo, stepTwoValidation } from "../../store/validation";
 import { Box, Text, TextInput } from "@mrshmllw/smores-react";
-import { ContinueButtons } from "../../components/ContinueButtons";
 import useQuoteStore from "../../store/quote.store";
+import { FormButtons } from "../../components/FormButtons";
 
 export function Address() {
   const { quoteId } = useParams();
@@ -111,7 +111,7 @@ export function Address() {
           )}
         />
 
-        <ContinueButtons />
+        <FormButtons />
       </form>
     </Box>
   );

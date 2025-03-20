@@ -6,14 +6,14 @@ interface Props {
   primaryButtonText?: string;
 }
 
-export const ContinueButtons = ({
+export const FormButtons = ({
   showBackButton = true,
   primaryButtonText = "continue",
 }: Props) => {
   const navigate = useNavigate();
   return (
     <Box as="section" flex columnGap="24px">
-      {showBackButton && (
+      {showBackButton ? (
         <Button
           type="button"
           secondary
@@ -22,7 +22,7 @@ export const ContinueButtons = ({
         >
           back
         </Button>
-      )}
+      ) : null}
       <Button style={{ flexBasis: "70%" }} type="submit">
         {primaryButtonText}
       </Button>
