@@ -1,29 +1,29 @@
 import { Box, Text, TextInput } from "@mrshmllw/smores-react";
 import { Controller, useForm } from "react-hook-form";
-import { useNavigate } from "react-router";
-import useFormStore from "../../store/form.store";
+import { useNavigate, useParams } from "react-router";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { stepThreeValidaton } from "../../store/validation";
 import { ContinueButtons } from "../../components/ContinueButtons";
+import useQuoteStore from "../../store/quote.store";
 
 export function FinalSubmit() {
-  const { stepThree, setStepData } = useFormStore();
+  const { quoteId } = useParams();
+  const { getQuoteData, deleteQuote } = useQuoteStore();
   const navigate = useNavigate();
 
+  const defaultValues =
+    (getQuoteData(quoteId!, "stepThree") as StepThree) || {};
   const methods = useForm({
     mode: "onTouched",
     resolver: zodResolver(stepThreeValidaton),
-    defaultValues: stepThree || {},
+    defaultValues,
   });
 
-  const { control, handleSubmit, getValues, formState } = methods;
+  const { control, handleSubmit } = methods;
 
-  const { errors } = formState;
-  console.log({ errors, values: getValues() });
-
-  const onSubmit = (data: StepThree) => {
-    console.log("submitting");
-    setStepData("stepThree", data);
+  const onSubmit = () => {
+    // NOTE: normally we would submit and then delete the quote getQuoteData
+    deleteQuote(quoteId!);
     navigate("/");
   };
 

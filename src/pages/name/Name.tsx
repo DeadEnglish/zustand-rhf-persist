@@ -1,30 +1,29 @@
 import { Box, NumberInput, Text, TextInput } from "@mrshmllw/smores-react";
 import { ContinueButtons } from "../../components/ContinueButtons";
 import { Controller, useForm } from "react-hook-form";
-import useFormStore from "../../store/form.store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { StepOne, stepOneValidation } from "../../store/validation";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
+import useQuoteStore from "../../store/quote.store";
 
 export function Name() {
-  const { stepOne, setStepData } = useFormStore();
+  const { quoteId } = useParams();
+  const { getQuoteData, updateQuoteData } = useQuoteStore();
   const navigate = useNavigate();
+
+  const defaultValues = (getQuoteData(quoteId!, "stepOne") as StepOne) || {};
 
   const methods = useForm({
     mode: "onTouched",
     resolver: zodResolver(stepOneValidation),
-    defaultValues: stepOne || {},
+    defaultValues,
   });
 
-  const { control, handleSubmit, getValues, formState } = methods;
-
-  const { errors } = formState;
-  console.log({ errors, values: getValues() });
+  const { control, handleSubmit } = methods;
 
   const onSubmit = (data: StepOne) => {
-    console.log("submitting");
-    setStepData("stepOne", data);
-    navigate("/address");
+    updateQuoteData(quoteId!, "stepOne", data);
+    navigate(`/quote/${quoteId}/address`);
   };
   return (
     <Box>
