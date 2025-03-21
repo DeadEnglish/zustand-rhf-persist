@@ -1,34 +1,6 @@
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
-import { StepOne, StepThree, StepTwo } from "./validation";
-
-type StepName = "stepOne" | "stepTwo" | "stepThree";
-
-interface Quote {
-  stepOne: StepOne | undefined;
-  stepTwo: StepTwo | undefined;
-  stepThree: StepThree | undefined;
-}
-
-type CreateQuote = (quoteId: string) => void;
-type UpdateQuoteData = (
-  quoteId: string,
-  step: StepName,
-  stepData: StepOne | StepTwo | StepThree,
-) => void;
-
-interface QuoteStore {
-  quotes: {
-    [quoteId: string]: Quote;
-  };
-  createQuote: CreateQuote;
-  getQuoteData: (
-    quoteId: string,
-    stepName?: StepName,
-  ) => Quote | Quote[StepName];
-  deleteQuote: (quoteId: string) => void;
-  updateQuoteData: UpdateQuoteData;
-}
+import { Quote, QuoteStore } from "./quote.types";
 
 const emptyStepData: Quote = {
   stepOne: undefined,
@@ -36,7 +8,7 @@ const emptyStepData: Quote = {
   stepThree: undefined,
 };
 
-// NOTE: Whilst htis is a very basic implementation with everything on one store, we could split this out into multiple stores
+// NOTE: Whilst this is a very basic implementation with everything on one store, we could split this out into multiple stores
 const useQuoteStore = create<QuoteStore>()(
   devtools(
     persist(
